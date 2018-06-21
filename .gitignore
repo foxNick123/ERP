@@ -1,4 +1,3 @@
-#忽略target
 target/
 target/*
 /target/
