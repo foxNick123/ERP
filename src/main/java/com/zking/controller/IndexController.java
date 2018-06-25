@@ -5,6 +5,7 @@ import com.zking.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,10 +40,7 @@ public class IndexController {
 
     //注册方法
     @RequestMapping("/addregister")
-    public String register(HttpServletRequest request){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String password2 = request.getParameter("password2");
+    public String register(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("password2")String password2){
         if (password.equals(password2)){
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(username);
@@ -56,9 +54,7 @@ public class IndexController {
 
     //登录方法
     @RequestMapping("/addlogin")
-    public String login(HttpServletRequest request){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    public String login(@RequestParam("username")String username,@RequestParam("password")String password){
         UserEntity userEntity = userDao.findByUsernameAndPassword(username,password);
         String str = "";
         if (userEntity !=null){
@@ -68,5 +64,13 @@ public class IndexController {
         }
         return str;
     }
-
+    public String check(String user,String pass) {
+    	String tt = ""; 
+    	if("123".equals(user) && "123".equals(pass)) {
+    		tt = "login";
+    	}else {
+    		tt = "register";
+    	}
+    	return tt;
+    }
 }
